@@ -1,0 +1,23 @@
+{
+  "name": "freelance-hours-counter",
+  "version": "0.0.1",
+  "description": "> A Vue.js project",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blckshrk/freelance-hours-counter.git"
+  },
+  "author": "Alexandre Bonhomme",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blckshrk/freelance-hours-counter/issues"
+  },
+  "homepage": "https://github.com/blckshrk/freelance-hours-counter#readme",
+  "dependencies": {
+    "jquery": "^3.0.0",
+    "moment": "^2.13.0"
+  }
+}
