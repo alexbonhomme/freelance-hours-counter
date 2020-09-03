@@ -5,7 +5,6 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default-dark.css'
 import routerInstance from './router'
-import creds from './credentials.json'
 
 Vue.config.productionTip = false
 
@@ -13,8 +12,8 @@ Vue.use(VueMaterial)
 
 // VueGAPI config
 const apiConfig = {
-  apiKey: creds.google.apiKey,
-  clientId: creds.google.clientId,
+  apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
+  clientId: process.env.VUE_APP_GOOGLE_CLIENT_ID,
   discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
   // see all available scopes here: https://developers.google.com/identity/protocols/googlescopes'
   scope: 'https://www.googleapis.com/auth/calendar.readonly',
