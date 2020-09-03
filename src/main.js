@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import App from './App.vue'
-
-// import the plugin
 import VueGAPI from 'vue-gapi'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default-dark.css'
+import routerInstance from './router'
 
 Vue.config.productionTip = false
 
-// create the 'options' object
+Vue.use(VueMaterial)
+
+// VueGAPI config
 const apiConfig = {
   apiKey: 'AIzaSyCS93f7DH1wgsZ6xtl28t9EiEVRCp3LHh8',
   clientId: '716599607292-rvhmhiq4jth1orikggk0ihjhnvh4cmcf.apps.googleusercontent.com',
@@ -23,4 +27,5 @@ Vue.use(VueGAPI, apiConfig)
 
 new Vue({
   render: h => h(App),
+  router: routerInstance
 }).$mount('#app')

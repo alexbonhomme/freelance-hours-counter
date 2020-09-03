@@ -1,17 +1,20 @@
 <template>
-  <div>
-    <p>Google Calendar API Quickstart</p>
+  <md-app>
+    <md-app-toolbar class="md-primary">
+      <span class="md-title" style="flex: 1">Freelance Hours Counter</span>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button v-if="!isAuthenticated" @click="handleAuthClick()">Authorize</button>
-    <button v-if="isAuthenticated" @click="handleSignoutClick()">Sign Out</button>
+      <md-button
+        v-if="$gapi.isAuthenticated()"
+        @click="logout()"
+      >logout</md-button>
+    </md-app-toolbar>
 
-    <div v-for="event in events" v-bind:key="event.id">
-      {{ event }}
-    </div>
-
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-  </div>
+    <md-app-content>
+      <div v-for="event in events" v-bind:key="event.id">
+        {{ event }}
+      </div>
+    </md-app-content>
+  </md-app>
 </template>
 
 <script>
@@ -25,39 +28,16 @@ export default {
     }
   },
   created() {
-    this.$gapi.getGapiClient().then((gapi) => {
-      this.gapi = gapi;
-      this.isAuthenticated = this.$gapi.isAuthenticated();
-
-      // if already loggedin fetch event
-      if (this.isAuthenticated) {
-        this.listUpcomingEvents()
-      }
-
-      // update loggeding status and fetch event if needed
-      this.$gapi.listenUserSignIn((isSignedIn) => {
-        this.isAuthenticated = isSignedIn
-
-        if (this.isAuthenticated) {
-          this.listUpcomingEvents()
-        }
-      })
-    })
-
+    this.listUpcomingEvents()
   },
   methods: {
     /**
      *  Sign in the user upon button click.
      */
-    handleAuthClick() {
-      this.$gapi.login()
-    },
-
-    /**
-     *  Sign out the user upon button click.
-     */
-    handleSignoutClick() {
-      this.$gapi.logout()
+    logout() {
+      this.$gapi.logout(() => {
+        this.$router.replace('/login')
+      })
     },
 
     /**
@@ -66,16 +46,18 @@ export default {
      * appropriate message is printed.
      */
     listUpcomingEvents() {
-      this.gapi.client.calendar.events.list({
-        'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 10,
-        'orderBy': 'startTime'
-      }).then((response) => {
-        this.events = response.result.items
-      });
+      this.$gapi.getGapiClient().then(gapi => {
+        gapi.client.calendar.events.list({
+          'calendarId': 'primary',
+          'timeMin': (new Date()).toISOString(),
+          'showDeleted': false,
+          'singleEvents': true,
+          'maxResults': 10,
+          'orderBy': 'startTime'
+        }).then((response) => {
+          this.events = response.result.items
+        });
+      })
     }
   }
 }
