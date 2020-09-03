@@ -1,23 +1,57 @@
 {
   "name": "freelance-hours-counter",
-  "version": "0.0.1",
-  "description": "> A Vue.js project",
-  "main": "index.html",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "author": "",
   "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "main": "index.js",
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "vue": "^3.0.0-0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0-0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0-0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "_id": "freelance-hours-counter@1.0.0",
+  "bugs": {
+    "url": "https://github.com/alexbonhomme/freelance-hours-counter/issues"
+  },
+  "homepage": "https://github.com/alexbonhomme/freelance-hours-counter#readme",
+  "license": "ISC",
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blckshrk/freelance-hours-counter.git"
-  },
-  "author": "Alexandre Bonhomme",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/blckshrk/freelance-hours-counter/issues"
-  },
-  "homepage": "https://github.com/blckshrk/freelance-hours-counter#readme",
-  "dependencies": {
-    "jquery": "^3.0.0",
-    "moment": "^2.13.0"
+    "url": "git+https://github.com/alexbonhomme/freelance-hours-counter.git"
   }
 }
