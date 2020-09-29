@@ -34,7 +34,7 @@
 
         <!-- hours counter -->
         <div v-if="dayCount" class="md-layout-item md-size-50 md-xsmall-size-100 text-right">
-          <span class="md-display-1">{{ dayCount.toFixed(2) }} day(s)</span>
+          <span class="md-display-1">{{ dayCount.toFixed(2) }} day{{ dayCount > 1 ? 's' : '' }}</span>
         </div>
       </div>
 
