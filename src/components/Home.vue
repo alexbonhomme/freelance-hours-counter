@@ -10,36 +10,50 @@
     </md-app-toolbar>
 
     <md-app-content>
-      <!-- token query -->
-      <md-field>
-        <label>Token</label>
-        <md-input
-          v-model="token"
-          @keypress.enter="fetchEvents()"
-        ></md-input>
-      </md-field>
+      <div class="md-layout md-gutter md-alignment-center-left">
+        <!-- token query -->
+        <div class="md-layout-item md-size-25 md-xsmall-size-100">
+          <md-field>
+            <label>Token</label>
+            <md-input
+              v-model="token"
+              @keypress.enter="fetchEvents()"
+            ></md-input>
+          </md-field>
+        </div>
+
+        <!-- from date selector -->
+        <div class="md-layout-item md-size-25 md-xsmall-size-100">
+          <md-datepicker
+            v-model="fromDate"
+            @md-closed="fetchEvents()"
+          >
+            <label>From date</label>
+          </md-datepicker>
+        </div>
+
+        <!-- hours counter -->
+        <div v-if="dayCount" class="md-layout-item md-size-50 md-xsmall-size-100 text-right">
+          <span class="md-display-1">{{ dayCount.toFixed(2) }} day(s)</span>
+        </div>
+      </div>
 
       <!-- event list -->
-      <md-table>
+      <md-table v-if="dayCount">
         <md-table-row>
-          <md-table-head md-numeric>ID</md-table-head>
+          <md-table-head>ID</md-table-head>
           <md-table-head>Summary</md-table-head>
           <md-table-head>Duration (minutes)</md-table-head>
           <md-table-head>Created</md-table-head>
         </md-table-row>
 
         <md-table-row v-for="event in events" v-bind:key="event.id">
-          <md-table-cell md-numeric>{{ event.id }}</md-table-cell>
+          <md-table-cell>{{ event.id }}</md-table-cell>
           <md-table-cell>{{ event.summary }}</md-table-cell>
           <md-table-cell>{{ event.durationInMinutes }}</md-table-cell>
           <md-table-cell>{{ event.created }}</md-table-cell>
         </md-table-row>
       </md-table>
-
-      <!-- hours counter -->
-      <div>
-        <span class="md-body-2">{{ dayCount.toFixed(2) }} day(s)</span>
-      </div>
     </md-app-content>
   </md-app>
 </template>
@@ -53,7 +67,8 @@ export default {
     return {
       token: '',
       events: [],
-      dayCount: 0
+      dayCount: 0,
+      fromDate: new Date('2020-01-01')
     }
   },
   methods: {
@@ -75,7 +90,7 @@ export default {
       this.$gapi.getGapiClient().then(gapi => {
         gapi.client.calendar.events.list({
           'calendarId': 'primary',
-          'timeMin': (new Date('2020-08-01')).toISOString(),
+          'timeMin': this.fromDate.toISOString(),
           'timeMax': (new Date()).toISOString(),
           'showDeleted': false,
           'singleEvents': true,
@@ -94,11 +109,11 @@ export default {
             return event
           })
 
-          const hourCout = this.events.reduce((counter, event) => {
+          const minutesCount = this.events.reduce((counter, event) => {
             return counter + event.durationInMinutes
           }, 0)
 
-          this.dayCount = hourCout / (60 * HOURS_PER_DAY)
+          this.dayCount = minutesCount / (60 * HOURS_PER_DAY)
         });
       })
     }
@@ -108,5 +123,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .text-right {
+    text-align: right;
+  }
 </style>
